@@ -1,4 +1,4 @@
-package com.example.i351599.sampleproject;
+package com.example.emin.myapplication;
 
 import org.junit.Test;
 

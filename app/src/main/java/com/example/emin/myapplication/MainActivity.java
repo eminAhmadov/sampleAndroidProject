@@ -2,6 +2,8 @@ package com.example.emin.myapplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,23 +35,54 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(MainActivity.this, "def", Toast.LENGTH_SHORT);
 
-                switch (view.getId()) {
-                    case R.id.buttonPlus:
-                        number.setText(String.valueOf(numberValue+addValueInt));
-                        toast.setText("added");
-                        toast.show();
-                        break;
-                    case R.id.buttonMinus:
-                        number.setText(String.valueOf(numberValue-addValueInt));
-                        toast.setText("subtracted");
-                        toast.show();
-                        break;
-                }
+                    switch (view.getId()) {
+                        case R.id.buttonPlus:
+                            number.setText(String.valueOf(numberValue+addValueInt));
+                            toast.setText("added");
+                            toast.show();
+                            break;
+                        case R.id.buttonMinus:
+                            number.setText(String.valueOf(numberValue-addValueInt));
+                            toast.setText("subtracted");
+                            toast.show();
+                            break;
+                    }
             }
         };
 
         plus.setOnClickListener(OnClickListener);
         minus.setOnClickListener(OnClickListener);
 
+        plus.setEnabled(false);
+        minus.setEnabled(false);
+
+        addValue.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if(s.toString().trim().length()==0){
+                    plus.setEnabled(false);
+                    minus.setEnabled(false);
+                } else {
+                    plus.setEnabled(true);
+                    minus.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+
+            }
+        });
     }
+
 }

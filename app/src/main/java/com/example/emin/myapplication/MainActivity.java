@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     Button minus;
     TextView number;
     EditText addValue;
+    TextView balanceType;
+
+    final int MENU_CARD_LABEL = 1;
+    final int MENU_CASH_LABEL = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         minus = findViewById(R.id.buttonMinus);
         number = findViewById(R.id.numberLabel);
         addValue = findViewById(R.id.addValue);
+        balanceType = findViewById(R.id.balanceType);
 
         View.OnClickListener OnClickListener = new View.OnClickListener() {
             @Override
@@ -85,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        registerForContextMenu(balanceType);
+
     }
 
     @Override
@@ -103,5 +112,27 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if(v.getId() == R.id.balanceType){
+            menu.add(0, MENU_CARD_LABEL, 0, "Card");
+            menu.add(0, MENU_CASH_LABEL, 0, "Cash");
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case MENU_CARD_LABEL:
+                balanceType.setText("Card");
+                break;
+            case MENU_CASH_LABEL:
+                balanceType.setText("Cash");
+                break;
+        }
+
+        return super.onContextItemSelected(item);
     }
 }
